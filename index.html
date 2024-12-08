@@ -1,65 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hooked Chat</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hooked Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1a1a2e;
+      color: white;
+    }
+
+    .container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login, .register, .chat-container {
+      width: 90%;
+      max-width: 400px;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+      animation: fadeIn 1s ease;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #333;
+      border: none;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    .chat-container {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .chat-box {
+      overflow-y: auto;
+      flex-grow: 1;
+      padding: 10px;
+      max-height: 70%;
+    }
+
+    .message {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #333;
+      border-radius: 5px;
+      animation: slideIn 0.5s ease;
+    }
+
+    .message.user {
+      background-color: #007bff;
+      text-align: right;
+    }
+
+    .message.bot {
+      background-color: #28a745;
+      text-align: left;
+    }
+
+    .send-area {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .send-area input {
+      width: 80%;
+    }
+
+    .send-area button {
+      width: 18%;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+  </style>
 </head>
 <body>
-    <div id="login-screen" class="screen">
-        <h1>Hooked Chat</h1>
-        <div id="login-options">
-            <form id="login-form">
-                <input type="text" id="login-username" placeholder="Username" required>
-                <input type="password" id="login-password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <button id="signup">Sign Up</button>
-        </div>
+  <div class="container">
+    <!-- Login Form -->
+    <div id="login-form" class="login">
+      <h1>Login to Hooked Chat</h1>
+      <input id="login-username" class="input-field" type="text" placeholder="Username">
+      <input id="login-password" class="input-field" type="password" placeholder="Password">
+      <button class="button" onclick="login()">Login</button>
+      <p style="text-align:center; margin-top: 10px;">Don't have an account? <span onclick="showRegisterForm()" style="color: #007bff; cursor: pointer;">Sign up</span></p>
     </div>
 
-    <div id="signup-screen" class="screen hidden">
-        <h1>Sign Up</h1>
-        <form id="signup-form">
-            <input type="text" id="signup-username" placeholder="Username" required>
-            <input type="password" id="signup-password" placeholder="Password" required>
-            <button type="submit">Sign Up</button>
-        </form>
-        <button id="back-to-login">Back to Login</button>
+    <!-- Register Form -->
+    <div id="register-form" class="register" style="display: none;">
+      <h1>Create an Account</h1>
+      <input id="register-username" class="input-field" type="text" placeholder="Username">
+      <input id="register-password" class="input-field" type="password" placeholder="Password">
+      <button class="button" onclick="register()">Register</button>
+      <p style="text-align:center; margin-top: 10px;">Already have an account? <span onclick="showLoginForm()" style="color: #007bff; cursor: pointer;">Login</span></p>
     </div>
 
-    <div id="chat-screen" class="screen hidden">
-        <header>
-            <button id="fullscreen-btn" title="Full Screen">⛶</button>
-            <h1>Hooked Chat</h1>
-            <button id="settings-btn" title="Settings">⚙️</button>
-        </header>
-
-        <div id="chat-box" class="chat-box">
-            <!-- Chat messages will appear here -->
-        </div>
-
-        <div class="input-box">
-            <textarea id="message-input" placeholder="Type a message..."></textarea>
-            <button id="send-btn">Send</button>
-        </div>
-
-        <div id="settings-modal" class="modal hidden">
-            <div class="modal-content">
-                <h2>Settings</h2>
-                <label for="theme-select">Choose Theme:</label>
-                <select id="theme-select">
-                    <option value="default">Default</option>
-                    <option value="love">Love Chat</option>
-                </select>
-                <button id="backup-btn">BackUp Save</button>
-                <button id="logout-btn">Logout</button>
-                <button id="close-settings">Close</button>
-            </div>
-        </div>
+    <!-- Chat Interface -->
+    <div id="chat-interface" class="chat-container">
+      <h1>Welcome to Hooked Chat</h1>
+      <div id="chat-box" class="chat-box"></div>
+      <div class="send-area">
+        <input id="message-input" class="input-field" type="text" placeholder="Type a message">
+        <button class="button" onclick="sendMessage()">Send</button>
+      </div>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <script>
+    // Variables to store user data
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let currentUser = null;
+
+    function showRegisterForm() {
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("register-form").style.display = "block";
+    }
+
+    function showLoginForm() {
+      document.getElementById("login-form").style.display = "block";
+      document.getElementById("register-form").style.display = "none";
+    }
+
+    function login() {
+      const username = document.getElementById("login-username").value;
+      const password = document.getElementById("login-password").value;
+
+      const user = users.find(u => u.username === username && u.password === password);
+      if (user) {
+        currentUser = user;
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        showChatInterface();
+      } else {
+        alert("Invalid credentials.");
+      }
+    }
+
+    function register() {
+      const username = document.getElementById("register-username").value;
+      const password = document.getElementById("register-password").value;
+
+      if (users.some(u => u.username === username)) {
+        alert("Username already taken.");
+        return;
+      }
+
+      const newUser = { username, password };
+      users.push(newUser);
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Account created successfully! Please log in.");
+      showLoginForm();
+    }
+
+    function showChatInterface() {
+      document.getElementById("chat-interface").style.display = "flex";
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("register-form").style.display = "none";
+
+      const savedUser = JSON.parse(localStorage.getItem("currentUser"));
+      currentUser = savedUser;
+      if (savedUser) {
+        addMessage("Welcome back, " + savedUser.username, "bot");
+      }
+    }
+
+    function sendMessage() {
+      const message = document.getElementById("message-input").value;
+      if (message.trim() !== "") {
+        addMessage(message, "user");
+        document.getElementById("message-input").value = "";
+        setTimeout(() => {
+          addMessage("Thanks for your message!", "bot");
+        }, 1000);
+      }
+    }
+
+    function addMessage(message, sender) {
+      const chatBox = document.getElementById("chat-box");
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message");
+      messageDiv.classList.add(sender);
+      messageDiv.textContent = message;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Check if user is logged in
+    if (localStorage.getItem("currentUser")) {
+      showChatInterface();
+    } else {
+      showLoginForm();
+    }
+  </script>
 </body>
 </html>
