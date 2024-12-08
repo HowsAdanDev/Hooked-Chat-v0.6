@@ -10,32 +10,32 @@ body {
     height: 100vh;
 }
 
-.container {
+/* Screen Container */
+.screen {
+    display: none;
     width: 90%;
     max-width: 400px;
     background-color: #12172b;
     border-radius: 10px;
-    overflow: hidden;
+    padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
 }
 
-/* Header */
-header {
-    background-color: #0d1b40;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #ffffff;
-    font-size: 20px;
+.screen.active {
+    display: block;
 }
 
-header button {
-    background: none;
+/* Login and Signup */
+#login-options button,
+#signup-form button {
+    background-color: #1e90ff;
     border: none;
     color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 20px;
+    margin: 10px 0;
 }
 
 /* Chat Box */
@@ -59,38 +59,21 @@ header button {
 .sender {
     align-self: flex-end;
     background-color: #1c5e1c;
-    color: #ffffff;
 }
 
-/* Input Box */
-.input-box {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #0d1b40;
-    gap: 10px;
-}
-
-#message-input {
-    flex-grow: 1;
-    padding: 10px;
-    border-radius: 20px;
-    border: none;
-    outline: none;
-    font-size: 16px;
-}
-
-#send-btn {
+.receiver {
+    align-self: flex-start;
     background-color: #1e90ff;
-    border: none;
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
 }
 
-/* Modal Styles */
+/* Love Theme */
+.love .sender,
+.love .receiver {
+    background-color: #ff1493;
+    color: #ffffff;
+}
+
+/* Settings Modal */
 .modal {
     position: fixed;
     top: 0;
@@ -113,7 +96,7 @@ header button {
     text-align: center;
 }
 
-.modal .hidden {
+.modal.hidden {
     visibility: hidden;
     opacity: 0;
 }
