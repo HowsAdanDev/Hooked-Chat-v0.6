@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hooked Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <button id="fullscreen-btn" title="Full Screen">⛶</button>
+            <h1>Hooked Chat</h1>
+            <button id="settings-btn" title="Settings">⚙️</button>
+        </header>
+
+        <!-- Chat Box -->
+        <div class="chat-box" id="chat-box">
+            <div class="message sender">Welcome to Hooked Chat!</div>
+        </div>
+
+        <!-- Input Box -->
+        <div class="input-box">
+            <textarea id="message-input" placeholder="Type a message..."></textarea>
+            <button id="send-btn">Send</button>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Settings</h2>
+                <button id="backup-btn">BackUp Save</button>
+                <button id="close-settings">Close</button>
+            </div>
+        </div>
+
+        <!-- Backup Modal -->
+        <div id="backup-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>BackUp Chat History</h2>
+                <button id="connect-btn">Add Connection</button>
+                <button id="close-backup">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
