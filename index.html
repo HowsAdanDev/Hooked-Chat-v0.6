@@ -7,40 +7,55 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
+    <div id="login-screen" class="screen">
+        <h1>Hooked Chat</h1>
+        <div id="login-options">
+            <form id="login-form">
+                <input type="text" id="login-username" placeholder="Username" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <button id="signup">Sign Up</button>
+        </div>
+    </div>
+
+    <div id="signup-screen" class="screen hidden">
+        <h1>Sign Up</h1>
+        <form id="signup-form">
+            <input type="text" id="signup-username" placeholder="Username" required>
+            <input type="password" id="signup-password" placeholder="Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <button id="back-to-login">Back to Login</button>
+    </div>
+
+    <div id="chat-screen" class="screen hidden">
         <header>
             <button id="fullscreen-btn" title="Full Screen">⛶</button>
             <h1>Hooked Chat</h1>
             <button id="settings-btn" title="Settings">⚙️</button>
         </header>
 
-        <!-- Chat Box -->
-        <div class="chat-box" id="chat-box">
-            <div class="message sender">Welcome to Hooked Chat!</div>
+        <div id="chat-box" class="chat-box">
+            <!-- Chat messages will appear here -->
         </div>
 
-        <!-- Input Box -->
         <div class="input-box">
             <textarea id="message-input" placeholder="Type a message..."></textarea>
             <button id="send-btn">Send</button>
         </div>
 
-        <!-- Settings Modal -->
         <div id="settings-modal" class="modal hidden">
             <div class="modal-content">
                 <h2>Settings</h2>
+                <label for="theme-select">Choose Theme:</label>
+                <select id="theme-select">
+                    <option value="default">Default</option>
+                    <option value="love">Love Chat</option>
+                </select>
                 <button id="backup-btn">BackUp Save</button>
+                <button id="logout-btn">Logout</button>
                 <button id="close-settings">Close</button>
-            </div>
-        </div>
-
-        <!-- Backup Modal -->
-        <div id="backup-modal" class="modal hidden">
-            <div class="modal-content">
-                <h2>BackUp Chat History</h2>
-                <button id="connect-btn">Add Connection</button>
-                <button id="close-backup">Close</button>
             </div>
         </div>
     </div>
